@@ -8,15 +8,19 @@ namespace Store
 
         public string Title { get; }
 
-        public string? Brand { get; }
         public int Price { get; }
 
-        public Item(int id, string title, string? brand, int price)
+        public string? Brand { get; }
+ 
+        public string ArticleNumber {  get; }
+
+        public Item(int id, string title, string? brand, int price, string articleNumber)
         {
             Id = id;
             Title = title;
             Brand = brand;
             Price = price;
+            ArticleNumber = articleNumber;
         }
     }
 }

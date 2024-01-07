@@ -9,12 +9,14 @@ namespace Store
     public interface IItemRepository
     {
 
-        Item[] GetAllByTitle(string title);
-
-
         // TODO: метод для поиска товаров по артиклю
-        //Item[] GetAllByArticleNumber(string articleNumber);
+        Item[] GetAllByArticleNumber(string articleNumber);
 
-        //Item[] GetAllByTitleOrBrand(string titleOrBrand);
+        Item[] GetAllByTitleOrBrand(string titleOrBrand);
+
+
+        
+
+
     }
 }
