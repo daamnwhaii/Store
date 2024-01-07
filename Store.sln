@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store", "Store\Store.csproj", "{6F010E10-2AC3-4B34-BB1F-E7696059BBE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store", "Store\Store.csproj", "{6F010E10-2AC3-4B34-BB1F-E7696059BBE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{92AC63C0-4D97-44E2-9187-7DC752B1E4AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{91BFD6D3-EB47-4F7C-8550-BC3287F333EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Memory", "infrastructure\Store.Memory\Store.Memory.csproj", "{A939EAD4-EAE0-46DE-8C13-DF97FDE23432}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,17 @@ Global
 		{6F010E10-2AC3-4B34-BB1F-E7696059BBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F010E10-2AC3-4B34-BB1F-E7696059BBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F010E10-2AC3-4B34-BB1F-E7696059BBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A939EAD4-EAE0-46DE-8C13-DF97FDE23432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A939EAD4-EAE0-46DE-8C13-DF97FDE23432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A939EAD4-EAE0-46DE-8C13-DF97FDE23432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A939EAD4-EAE0-46DE-8C13-DF97FDE23432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6F010E10-2AC3-4B34-BB1F-E7696059BBE1} = {92AC63C0-4D97-44E2-9187-7DC752B1E4AC}
+		{A939EAD4-EAE0-46DE-8C13-DF97FDE23432} = {91BFD6D3-EB47-4F7C-8550-BC3287F333EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2EB80348-2C71-4C61-9A66-EC0A61A0BF3D}
