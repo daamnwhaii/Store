@@ -8,9 +8,22 @@ namespace Store
 {
     public class ItemService
     {
-        public Item[] GetAllByQuery(string query)
+        private readonly IItemRepository itemRepository;
+
+        public ItemService(IItemRepository itemRepository)
         { 
-            throw new NotImplementedException();
+            this.itemRepository = itemRepository;
+        }
+        public Item[] GetAllByQuery(string query)
+        {
+            if (Item.IsArticleNumber(query))
+            {
+                return itemRepository.GetAllByArticleNumber(query);
+            }
+            else 
+            {
+                return itemRepository.GetAllByTitleOrBrand(query);
+            }
         }
     }
 }

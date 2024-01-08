@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Store
 {
@@ -21,6 +22,18 @@ namespace Store
             Brand = brand;
             Price = price;
             ArticleNumber = articleNumber;
+        }
+
+        internal static bool IsArticleNumber(string str)     //метод, определяющий является ли введенная строка артикулом
+        {
+            if (str == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Regex.IsMatch(str, "\\d{7}");     //шаблон, с которым сранивается введенный артикул (7-значное число)
+            }
         }
     }
 }
