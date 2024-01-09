@@ -11,6 +11,7 @@ namespace Store.Web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddSingleton<IItemRepository, ItemRepository>();
+            builder.Services.AddSingleton<ItemService>();
 
             var app = builder.Build();
 

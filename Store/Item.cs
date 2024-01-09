@@ -9,18 +9,18 @@ namespace Store
 
         public string Title { get; }
 
-        public int Price { get; }
+        //public int Price { get; }
 
         public string? Brand { get; }
  
         public string ArticleNumber {  get; }
 
-        public Item(int id, string title, string? brand, int price, string articleNumber)
+        public Item(int id, string title, string? brand, string articleNumber)
         {
             Id = id;
             Title = title;
             Brand = brand;
-            Price = price;
+            //Price = price;
             ArticleNumber = articleNumber;
         }
 
