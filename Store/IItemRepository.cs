@@ -14,9 +14,6 @@ namespace Store
 
         Item[] GetAllByTitleOrBrand(string titleOrBrand);
 
-
-        
-
-
+        Item GetById(int id);
     }
 }

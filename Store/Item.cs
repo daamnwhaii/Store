@@ -9,19 +9,22 @@ namespace Store
 
         public string Title { get; }
 
-        //public int Price { get; }
+        public decimal Price { get; }
 
         public string? Brand { get; }
  
         public string ArticleNumber {  get; }
 
-        public Item(int id, string title, string? brand, string articleNumber)
+        public string Description { get; }
+
+        public Item(int id, string title, string? brand, decimal price, string articleNumber, string description)
         {
             Id = id;
             Title = title;
             Brand = brand;
-            //Price = price;
+            Price = price;
             ArticleNumber = articleNumber;
+            Description = description;
         }
 
         internal static bool IsArticleNumber(string str)     //метод, определяющий является ли введенная строка артикулом
