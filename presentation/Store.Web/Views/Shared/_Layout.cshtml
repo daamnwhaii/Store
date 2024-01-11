@@ -1,30 +1,60 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Главная страница</title>
+    <title>@ViewData["Title"] - Главная страница </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Store.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> Интернет-магазин(название) </a>
-            <form class="form-inline my-2 my-lg-0" action="@Url.Action("Index", "Search")" method="get">
-
-                <input class="form-control mr-sm-2" type="search" placeholder="Название или бренд" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Искать</button>
-            </form>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Интернет-магазин(название)</a>
+                <form class="form-online my-2 my-lg-0" action="@Url.Action("Index", "Search")" method="get" style="margin:0 auto;">
+                    <input type="search" class="input" name="query"  placeholder="Название товара или бренда" value="" />
+                    <button type="submit" class="button">Искать</button>
+                </form>               
+            </div>
         </nav>
     </header>
     <div class="container">
-        <main>
+        <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
+    <style>
+        .button{
+            width: 100px;
+            height: 40px;
+            margin-top: 5px;
+            border-radius: 12px;
+            color: #000000;
+            background-color: #FFFFFF;
+            border: 2px solid #4CAF50;
+            transition-duration: 0.4s;
+        }
+        .button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .input{
+            width: 550px; 
+            line-height: 33px; 
+            border: 1px solid #cccccc;
+            border-radius: 7px; 
+            margin-top: 5px;
+        }
+    </style>
+
+    @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Store.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
