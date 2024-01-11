@@ -14,10 +14,10 @@ namespace Store.Tests
         {
             var itemRepositoryStub = new Mock<IItemRepository>();
             itemRepositoryStub.Setup(x => x.GetAllByArticleNumber(It.IsAny<string>()))
-                              .Returns(new[] { new Item(1, "", "", "") });
+                              .Returns(new[] { new Item(1, "", "", 0m, "", "") });
 
             itemRepositoryStub.Setup(x => x.GetAllByTitleOrBrand(It.IsAny<string>()))
-                              .Returns(new[] { new Item(2, "", "", "") });
+                              .Returns(new[] { new Item(2, "", "", 0m, "", "") });
 
             var itemService = new ItemService(itemRepositoryStub.Object);
             var validArticleNumber = "5547218";
@@ -32,10 +32,10 @@ namespace Store.Tests
         {
             var itemRepositoryStub = new Mock<IItemRepository>();
             itemRepositoryStub.Setup(x => x.GetAllByArticleNumber(It.IsAny<string>()))
-                              .Returns(new[] { new Item(1, "", "", "") });
+                              .Returns(new[] { new Item(1, "", "", 0m, "", "") });
 
             itemRepositoryStub.Setup(x => x.GetAllByTitleOrBrand(It.IsAny<string>()))
-                              .Returns(new[] { new Item(2, "", "", "") });
+                              .Returns(new[] { new Item(2, "", "", 0m, "", "") });
 
             var itemService = new ItemService(itemRepositoryStub.Object);
             var invalidArticleNumber = "55";
