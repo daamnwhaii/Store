@@ -3,18 +3,18 @@ using Store.Web.Models;
 
 namespace Store.Web.Controllers
 {
-    public class CartController : Controller
+    public class OrderController : Controller
     {
         private readonly IItemRepository itemRepository;
         private readonly IOrderRepository orderRepository;
 
-        public CartController(IItemRepository itemRepository, IOrderRepository orderRepository)
+        public OrderController(IItemRepository itemRepository, IOrderRepository orderRepository)
         {
             this.itemRepository = itemRepository;
             this.orderRepository = orderRepository;
         }
 
-        public IActionResult Add(int id)
+        public IActionResult AddItem(int id)
         {
             Order order;
             Cart cart;
