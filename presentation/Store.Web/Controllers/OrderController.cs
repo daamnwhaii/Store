@@ -14,6 +14,34 @@ namespace Store.Web.Controllers
             this.orderRepository = orderRepository;
         }
 
+        public IActionResult Index() 
+        {
+            if (HttpContext.Session.TryGetCart(out Cart cart))
+            {
+                var order = orderRepository.GetById(cart.OrderId);
+                OrderModel model = null;
+
+                return View(model);
+            }
+            return View("Empty");
+        }
+
+        //private OrderModel Map(Order order) 
+        //{
+        //    var itemIds = order.Items.Select(item => item.ItemId);
+        //    var items = itemRepository.GetAllByIds(itemIds);
+        //    var itemModels = from item in order.Items
+        //                     join item in items on item.ItemId equals item.OrderId
+        //                     select new OrderItemModel
+        //                     {
+        //                         ItemId = item.ItemId,
+        //                         Title = item.Title,
+        //                         Brand = item.Brand,
+        //                         Price = item.Price,
+        //                         Count = item.Count,
+        //                     };
+        //}
+
         public IActionResult AddItem(int id)
         {
             Order order;
