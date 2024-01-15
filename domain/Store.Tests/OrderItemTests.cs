@@ -33,7 +33,7 @@ namespace Store.Tests
         {
             var orderItem = new OrderItem(1, 2, 3m);
 
-            Assert.Equal(1, orderItem.ItemId);
+            Assert.Equal(1, orderItem.ProductId);
             Assert.Equal(2, orderItem.Count);
             Assert.Equal(3m, orderItem.Price);
 

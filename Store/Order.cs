@@ -37,23 +37,23 @@ namespace Store
             this.items = new List<OrderItem>(items);
         }
 
-        public void AddItem(Item item, int count)
+        public void AddItem(Product product, int count)
         {
-            if (item == null)
+            if (product == null)
             {
-                throw new ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(product));
             }
 
-            var _item = items.SingleOrDefault(x => x.ItemId == item.Id);
+            var item = items.SingleOrDefault(x => x.ProductId == product.Id);
 
-            if (_item == null)
+            if (item == null)
             {
-                items.Add(new OrderItem(item.Id, count, item.Price));
+                items.Add(new OrderItem(product.Id, count, product.Price));
             }
             else
             {
-                items.Remove(_item);
-                items.Add(new OrderItem(item.Id, _item.Count + count, item.Price));
+                items.Remove(item);
+                items.Add(new OrderItem(product.Id, item.Count + count, product.Price));
             }
         }
     }

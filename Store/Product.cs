@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Store
 {
-    public class Item
+    public class Product
     {
         public int Id { get; }
 
@@ -17,7 +17,7 @@ namespace Store
 
         public string Description { get; }
 
-        public Item(int id, string title, string? brand, decimal price, string articleNumber, string description)
+        public Product(int id, string title, string? brand, decimal price, string articleNumber, string description)
         {
             Id = id;
             Title = title;

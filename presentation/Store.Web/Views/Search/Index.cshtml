@@ -1,4 +1,4 @@
-﻿@model Item[]
+﻿@model Product[]
 
 @{
     ViewData["Title"] = "Результаты поиска";
@@ -15,7 +15,7 @@ else
     <ul>
     @foreach(var item in Model)
         {
-            <li><a href ="@Url.Action("Index", "Item", new {id = item.Id})">@item.Title</a></li>        
+            <li><a href ="@Url.Action("Index", "Product", new {id = item.Id})">@item.Title</a></li>        
         }
     </ul>
 }

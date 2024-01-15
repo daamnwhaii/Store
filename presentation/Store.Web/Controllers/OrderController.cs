@@ -5,12 +5,12 @@ namespace Store.Web.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly IItemRepository itemRepository;
+        private readonly IProductRepository productRepository;
         private readonly IOrderRepository orderRepository;
 
-        public OrderController(IItemRepository itemRepository, IOrderRepository orderRepository)
+        public OrderController(IProductRepository productRepository, IOrderRepository orderRepository)
         {
-            this.itemRepository = itemRepository;
+            this.productRepository = productRepository;
             this.orderRepository = orderRepository;
         }
 
@@ -26,19 +26,19 @@ namespace Store.Web.Controllers
             return View("Empty");
         }
 
-        //private OrderModel Map(Order order) 
+        //private OrderModel Map(Order order)
         //{
-        //    var itemIds = order.Items.Select(item => item.ItemId);
-        //    var items = itemRepository.GetAllByIds(itemIds);
+        //    var productIds = order.Items.Select(item => item.ProductId);
+        //    var products = productRepository.GetAllByIds(productIds);
         //    var itemModels = from item in order.Items
-        //                     join item in items on item.ItemId equals item.OrderId
+        //                     join product in products on item.ProductId equals product.OrderId
         //                     select new OrderItemModel
         //                     {
-        //                         ItemId = item.ItemId,
-        //                         Title = item.Title,
-        //                         Brand = item.Brand,
-        //                         Price = item.Price,
-        //                         Count = item.Count,
+        //                         ItemId = product.ItemId,
+        //                         Title = product.Title,
+        //                         Brand = product.Brand,
+        //                         Price = product.Price,
+        //                         Count = product.Count,
         //                     };
         //}
 
@@ -57,15 +57,15 @@ namespace Store.Web.Controllers
                 cart = new Cart(order.Id);
             }
 
-            var item = itemRepository.GetById(id);
-            order.AddItem(item, 1);
+            var product = productRepository.GetById(id);
+            order.AddItem(product, 1);
             orderRepository.Update(order);
 
             cart.TotalCount = order.TotalCount;
             cart.TotalPrice = order.TotalPrice;
             HttpContext.Session.Set(cart);
 
-            return RedirectToAction("Index", "Item", new { id });
+            return RedirectToAction("Index", "Product", new { id });
         }
     }
 }

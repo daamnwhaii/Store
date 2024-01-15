@@ -18,9 +18,9 @@ namespace Store.Web
                 options.Cookie.IsEssential = true;
             });
 
-            builder.Services.AddSingleton<IItemRepository, ItemRepository>();
+            builder.Services.AddSingleton<IProductRepository, ProductRepository>();
             builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
-            builder.Services.AddSingleton<ItemService>();
+            builder.Services.AddSingleton<ProductService>();
 
             var app = builder.Build();
 

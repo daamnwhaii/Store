@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Store
 {
-    public interface IItemRepository
+    public interface IProductRepository
     {
 
         // TODO: метод для поиска товаров по артиклю
-        Item[] GetAllByArticleNumber(string articleNumber);
+        Product[] GetAllByArticleNumber(string articleNumber);
 
-        Item[] GetAllByTitleOrBrand(string titleOrBrand);
+        Product[] GetAllByTitleOrBrand(string titleOrBrand);
 
-        Item GetById(int id);
+        Product GetById(int id);
     }
 }
