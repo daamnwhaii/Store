@@ -19,6 +19,7 @@ namespace Store.Web
             });
 
             builder.Services.AddSingleton<IItemRepository, ItemRepository>();
+            builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
             builder.Services.AddSingleton<ItemService>();
 
             var app = builder.Build();
