@@ -1,11 +1,11 @@
 namespace Store.Tests
 {
-    public class ItemTests
+    public class ProductTests
     {
         [Fact]
         public void IsArticleNumber_WithNull_ReturnFalse()
         {
-            bool actual = Item.IsArticleNumber(null);
+            bool actual = Product.IsArticleNumber(null);
 
             Assert.False(actual);
         }
@@ -13,7 +13,7 @@ namespace Store.Tests
         [Fact]
         public void IsArticleNumber_WithSpaceString_ReturnFalse()
         {
-            bool actual = Item.IsArticleNumber("   ");
+            bool actual = Product.IsArticleNumber("   ");
 
             Assert.False(actual);
         }
@@ -21,7 +21,7 @@ namespace Store.Tests
         [Fact]
         public void IsArticleNumber_WithInvalidArticleNumber_ReturnFalse()
         {
-            bool actual = Item.IsArticleNumber("qwerty52");
+            bool actual = Product.IsArticleNumber("qwerty52");
 
             Assert.False(actual);
         }
@@ -29,7 +29,7 @@ namespace Store.Tests
         [Fact]
         public void IsArticleNumber_WithArticleNumber7_ReturnTrue()    //артикул у товаров всегда будет 7-значный
         {
-            bool actual = Item.IsArticleNumber("8775324");
+            bool actual = Product.IsArticleNumber("8775324");
 
             Assert.True(actual);
         }
