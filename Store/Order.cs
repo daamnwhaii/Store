@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,15 +17,9 @@ namespace Store
         {
             get { return items; }
         }
-        public int TotalCount
-        {
-            get { return items.Sum(item => item.Count); }
-        }
+        public int TotalCount => items.Sum(item => item.Count);
 
-        public decimal TotalPrice
-        {
-            get { return items.Sum(item => item.Price * item.Count); }
-        }
+        public decimal TotalPrice => items.Sum(item => item.Price * item.Count);
 
         public Order(int id, IEnumerable<OrderItem> items)
         {
@@ -37,61 +32,42 @@ namespace Store
             this.items = new List<OrderItem>(items);
         }
 
-        private void AddOrUpdateItem(Product product, int count)
+        public OrderItem GetItem(int productId)
+        {
+            int index = items.FindIndex(item => item.ProductId == productId);
+            if (index == -1)
+                ThrowProductException("Product not found.", productId);
+            return items[index];
+        }
+
+        public void AddOrUpdateItem(Product product, int count)
         {
             if (product == null)
-            {
                 throw new ArgumentNullException(nameof(product));
-            }
 
-            var item = items.SingleOrDefault(x => x.ProductId == product.Id);
-
-            if (item == null)
-            {
+            int index = items.FindIndex(item => item.ProductId == product.Id);
+            if (index == -1)
                 items.Add(new OrderItem(product.Id, count, product.Price));
-            }
             else
-            {
-                items.Remove(item);
-                items.Add(new OrderItem(product.Id, item.Count + count, product.Price));
-            }
+                items[index].Count += count;
         }
 
-        public void AddProduct(Product product)
+        public void RemoveItem(int productId)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
-            else
-            {
-                AddOrUpdateItem(product, 1);
-            }
+            int index = items.FindIndex(item => item.ProductId == productId);
+
+            if (index == -1)
+                ThrowProductException("Order does not contain specified item.", productId);
+
+            items.RemoveAt(index);
         }
 
-        public void RemoveProduct(Product product)
+        private void ThrowProductException(string message, int productId)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
-            else
-            {
-                AddOrUpdateItem(product, -1);
-            }
-        }
+            var exception = new InvalidOperationException(message);
+            exception.Data["ProductId"] = productId;
 
-        public void RemoveItem(Product product)
-        {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
-            if (items.Count == 0)
-                throw new InvalidOperationException("Cart must contain items");
-
-            var item = items.SingleOrDefault(x => x.ProductId == product.Id);
-            if (item == null)
-                throw new InvalidOperationException("Cart does not contain item with ID: " + product.Id);
-            items.RemoveAll(x => x.ProductId == product.Id);
+            throw exception;
         }
     }
 }

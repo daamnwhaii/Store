@@ -53,5 +53,7 @@ namespace Store.Tests
 
             Assert.Equal(3 * 10m + 5 * 100m, order.TotalPrice);
         }
+
+
     }
 }
