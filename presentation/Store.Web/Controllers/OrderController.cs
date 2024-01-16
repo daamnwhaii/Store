@@ -14,33 +14,40 @@ namespace Store.Web.Controllers
             this.orderRepository = orderRepository;
         }
 
-        public IActionResult Index() 
+        public IActionResult Index()
         {
             if (HttpContext.Session.TryGetCart(out Cart cart))
             {
                 var order = orderRepository.GetById(cart.OrderId);
-                OrderModel model = null;
+                OrderModel model = Map(order);
 
                 return View(model);
             }
             return View("Empty");
         }
 
-        //private OrderModel Map(Order order)
-        //{
-        //    var productIds = order.Items.Select(item => item.ProductId);
-        //    var products = productRepository.GetAllByIds(productIds);
-        //    var itemModels = from item in order.Items
-        //                     join product in products on item.ProductId equals product.OrderId
-        //                     select new OrderItemModel
-        //                     {
-        //                         ItemId = product.ItemId,
-        //                         Title = product.Title,
-        //                         Brand = product.Brand,
-        //                         Price = product.Price,
-        //                         Count = product.Count,
-        //                     };
-        //}
+        private OrderModel Map(Order order)
+        {
+            var productIds = order.Items.Select(item => item.ProductId);
+            var products = productRepository.GetAllByIds(productIds);
+            var itemModels = from item in order.Items
+                             join product in products on item.ProductId equals product.Id
+                             select new OrderItemModel
+                             {
+                                 ItemId = product.Id,
+                                 Title = product.Title,
+                                 Brand = product.Brand,
+                                 Price = item.Price,
+                                 Count = item.Count,
+                             };
+            return new OrderModel
+            {
+                Id = order.Id,
+                Items = itemModels.ToArray(),
+                TotalCount = order.TotalCount,
+                TotalPrice = order.TotalPrice,
+            };
+        }
 
         public IActionResult AddItem(int id)
         {

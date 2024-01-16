@@ -8,12 +8,12 @@ namespace Store
 {
     public interface IProductRepository
     {
-
-        // TODO: метод для поиска товаров по артиклю
         Product[] GetAllByArticleNumber(string articleNumber);
 
         Product[] GetAllByTitleOrBrand(string titleOrBrand);
 
         Product GetById(int id);
+
+        Product[] GetAllByIds(IEnumerable<int> productIds);
     }
 }
