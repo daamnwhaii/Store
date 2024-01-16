@@ -37,7 +37,7 @@ namespace Store
             this.items = new List<OrderItem>(items);
         }
 
-        public void AddItem(Product product, int count)
+        private void AddOrUpdateItem(Product product, int count)
         {
             if (product == null)
             {
@@ -57,37 +57,40 @@ namespace Store
             }
         }
 
-        public void RemoveItem(Product product, int count)
+        public void AddProduct(Product product)
         {
             if (product == null)
+            {
                 throw new ArgumentNullException(nameof(product));
-
-            if (items.Count == 0)
-                throw new InvalidOperationException("Cart must contain items");
-
-            var item = items.SingleOrDefault(x => x.ProductId == product.Id);
-            if (item == null)
-                throw new InvalidOperationException("Cart does not contain item with ID: " + product.Id);
-
-            items.Remove(item);
-            if (item.Count - count == 0)
-                return;
-
-            items.Add(new OrderItem(product.Id, item.Count - count, product.Price));
+            }
+            else
+            {
+                AddOrUpdateItem(product, 1);
+            }
         }
 
-        public void RemoveItems(Product product)
+        public void RemoveProduct(Product product)
+        {
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+            else
+            {
+                AddOrUpdateItem(product, -1);
+            }
+        }
+
+        public void RemoveItem(Product product)
         {
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
-
             if (items.Count == 0)
                 throw new InvalidOperationException("Cart must contain items");
 
             var item = items.SingleOrDefault(x => x.ProductId == product.Id);
             if (item == null)
                 throw new InvalidOperationException("Cart does not contain item with ID: " + product.Id);
-
             items.RemoveAll(x => x.ProductId == product.Id);
         }
     }
