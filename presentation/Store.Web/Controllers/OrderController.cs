@@ -74,5 +74,53 @@ namespace Store.Web.Controllers
 
             return RedirectToAction("Index", "Product", new { id });
         }
+
+        public IActionResult RemoveItem(int id)
+        {
+            Order order;
+            Cart cart;
+            if (HttpContext.Session.TryGetCart(out cart))
+            {
+                order = orderRepository.GetById(cart.OrderId);
+            }
+            else
+            {
+                order = orderRepository.Create();
+                cart = new Cart(order.Id);
+            }
+
+            var product = productRepository.GetById(id);
+            order.RemoveItem(product, 1);
+            orderRepository.Update(order);
+
+            cart.TotalCount = order.TotalCount;
+            cart.TotalPrice = order.TotalPrice;
+            HttpContext.Session.Set(cart);
+            return RedirectToAction("Index", "Product", new { id });
+        }
+
+        public IActionResult RemoveItems(int id)
+        {
+            Order order;
+            Cart cart;
+            if (HttpContext.Session.TryGetCart(out cart))
+            {
+                order = orderRepository.GetById(cart.OrderId);
+            }
+            else
+            {
+                order = orderRepository.Create();
+                cart = new Cart(order.Id);
+            }
+
+            var product = productRepository.GetById(id);
+            order.RemoveItems(product);
+            orderRepository.Update(order);
+
+            cart.TotalCount = order.TotalCount;
+            cart.TotalPrice = order.TotalPrice;
+            HttpContext.Session.Set(cart);
+            return RedirectToAction("Index", "Product", new { id });
+        }
     }
 }

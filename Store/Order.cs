@@ -56,5 +56,39 @@ namespace Store
                 items.Add(new OrderItem(product.Id, item.Count + count, product.Price));
             }
         }
+
+        public void RemoveItem(Product product, int count)
+        {
+            if (product == null)
+                throw new ArgumentNullException(nameof(product));
+
+            if (items.Count == 0)
+                throw new InvalidOperationException("Cart must contain items");
+
+            var item = items.SingleOrDefault(x => x.ProductId == product.Id);
+            if (item == null)
+                throw new InvalidOperationException("Cart does not contain item with ID: " + product.Id);
+
+            items.Remove(item);
+            if (item.Count - count == 0)
+                return;
+
+            items.Add(new OrderItem(product.Id, item.Count - count, product.Price));
+        }
+
+        public void RemoveItems(Product product)
+        {
+            if (product == null)
+                throw new ArgumentNullException(nameof(product));
+
+            if (items.Count == 0)
+                throw new InvalidOperationException("Cart must contain items");
+
+            var item = items.SingleOrDefault(x => x.ProductId == product.Id);
+            if (item == null)
+                throw new InvalidOperationException("Cart does not contain item with ID: " + product.Id);
+
+            items.RemoveAll(x => x.ProductId == product.Id);
+        }
     }
 }
