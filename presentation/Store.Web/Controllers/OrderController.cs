@@ -35,7 +35,7 @@ namespace Store.Web.Controllers
                              join product in products on item.ProductId equals product.Id
                              select new OrderItemModel
                              {
-                                 ItemId = product.Id,
+                                 ProductId = product.Id,
                                  Title = product.Title,
                                  Brand = product.Brand,
                                  Price = item.Price,
@@ -72,7 +72,7 @@ namespace Store.Web.Controllers
 
             SaveOrderAndCart(order, cart);
 
-            return RedirectToAction("Index", "Product", new { productId });
+            return RedirectToAction("Index", "Order");
         }
 
         private (Order order, Cart cart) GetOrCreateOrderAndCart()
@@ -100,15 +100,15 @@ namespace Store.Web.Controllers
             HttpContext.Session.Set(cart);
         }
 
-        public IActionResult RemoveItem(int id)
+        public IActionResult RemoveItem(int productId)
         {
             (Order order, Cart cart) = GetOrCreateOrderAndCart();
 
-            order.RemoveItem(id);
+            order.RemoveItem(productId);
 
             SaveOrderAndCart(order, cart);
 
-            return RedirectToAction("Index", "Product", new { id });
+            return RedirectToAction("Index", "Order");
         }
     }
 }
