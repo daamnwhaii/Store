@@ -13,7 +13,8 @@ namespace Store.Web.Controllers
         public IActionResult Index(string query)
         {
             var products = productService.GetAllByQuery(query);
-            return View(products);
+
+            return View("Index", products);
         }
     }
 }
