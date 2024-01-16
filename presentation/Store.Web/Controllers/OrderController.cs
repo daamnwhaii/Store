@@ -50,7 +50,7 @@ namespace Store.Web.Controllers
             };
         }
 
-        public IActionResult AddItem(int productId, int count)
+        public IActionResult AddItem(int productId, int count = 1)
         {
             (Order order, Cart cart) = GetOrCreateOrderAndCart();
 
@@ -60,7 +60,7 @@ namespace Store.Web.Controllers
 
             SaveOrderAndCart(order, cart);
 
-            return RedirectToAction("Index", "Product", new { productId });
+            return RedirectToAction("Index", "Product", new { id = productId });
         }
 
         [HttpPost]
