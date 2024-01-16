@@ -1,8 +1,9 @@
-﻿namespace Store.Memory
+﻿
+namespace Store.Memory
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly Product[] items = new[]
+        private readonly Product[] products = new[]
         {
             new Product(1, "Shirt", "Puma", 3200.00m, "8887771", "Decription 1"),
             new Product(2, "Sneakers", "Nike", 7500.00m, "5458872", "Decription 2"),
@@ -24,20 +25,29 @@
 
         public Product[] GetAllByArticleNumber(string articleNumber)
         {
-            return items.Where(item => item.ArticleNumber == articleNumber)
+            return products.Where(product => product.ArticleNumber == articleNumber)
                         .ToArray();
+        }
+
+        public Product[] GetAllByIds(IEnumerable<int> productIds)
+        {
+            var fondProducts = from product in products
+                               join productId in productIds on product.Id equals productId
+                               select product;
+
+            return fondProducts.ToArray();
         }
 
         public Product[] GetAllByTitleOrBrand(string query)
         {
-            return items.Where(item => item.Title.Contains(query) 
-                                    || item.Brand.Contains(query))
+            return products.Where(product => product.Title.Contains(query)
+                                          || product.Brand.Contains(query))
                         .ToArray();
         }
 
         public Product GetById(int id)
         {
-            return items.Single(item => item.Id == id);
+            return products.Single(product => product.Id == id);
         }
     }
 }
