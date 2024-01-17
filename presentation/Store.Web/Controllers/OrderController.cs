@@ -183,7 +183,7 @@ namespace Store.Web.Controllers
                                 CellPhone = cellPhone,
                                 Errors = new Dictionary<string, string>
                                 {
-                                    { "code", "Отличается от отправленного" }
+                                    { "code", "Неверный код" }
                                 },
                             }); ;
             }
