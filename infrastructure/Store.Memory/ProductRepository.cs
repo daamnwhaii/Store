@@ -31,11 +31,11 @@ namespace Store.Memory
 
         public Product[] GetAllByIds(IEnumerable<int> productIds)
         {
-            var fondProducts = from product in products
+            var foundProducts = from product in products
                                join productId in productIds on product.Id equals productId
                                select product;
 
-            return fondProducts.ToArray();
+            return foundProducts.ToArray();
         }
 
         public Product[] GetAllByTitleOrBrand(string query)
