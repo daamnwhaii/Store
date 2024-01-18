@@ -6,7 +6,7 @@
 
 <h1>Подтверждение номера телефона</h1>
 
-<form action="@Url.Action("StartDelivery")" method="post">
+<form action="@Url.Action("Confirmate")" method="post">
     <input type="hidden" name="id" value="@Model.OrderId" />
     <input type="hidden" name="cellPhone" value="@Model.CellPhone" />
     <div class="form-group">
@@ -27,7 +27,7 @@
     <div class="form-group">
         <label for="cellPhone">Мобильный телефон</label>
         <hr width="50%" color="green" />
-        <input type="text" class="form-control" name="cellPhone" value="@Model.CellPhone" 
+        <input type="text" class="form-control" name="cellPhone" value="@Model.CellPhone"
                style="width: 200px;" />
     </div>
     <button type="submit" class="btn btn-success">Отправить код повторно</button>
