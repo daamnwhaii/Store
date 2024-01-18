@@ -1,5 +1,7 @@
+using Store.Contractors;
 using Store.Memory;
 using Store.Messages;
+using Store.Web.Controllers;
 
 namespace Store.Web
 {
@@ -22,6 +24,7 @@ namespace Store.Web
             builder.Services.AddSingleton<IProductRepository, ProductRepository>();
             builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
             builder.Services.AddSingleton<INotificationService, DebugNotificationService>();
+            builder.Services.AddSingleton<IDeliveryService, PickUpPointDeliveryService>();
             builder.Services.AddSingleton<ProductService>();
 
             var app = builder.Build();
