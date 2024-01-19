@@ -25,6 +25,7 @@ namespace Store.Web
             builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
             builder.Services.AddSingleton<INotificationService, DebugNotificationService>();
             builder.Services.AddSingleton<IDeliveryService, PickUpPointDeliveryService>();
+            builder.Services.AddSingleton<IPaymentService, CashPaymentService>();
             builder.Services.AddSingleton<ProductService>();
 
             var app = builder.Build();

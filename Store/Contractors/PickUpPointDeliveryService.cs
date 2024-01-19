@@ -47,7 +47,34 @@ namespace Store.Web.Controllers
             });
         }
 
-        public Form MoveNext(int orderId, int step, IReadOnlyDictionary<string, string> values)
+        public OrderDelivery GetDelivery(Form form)
+        {
+            if (form.UniqueCode != UniqueCode || !form.IsFinal)
+                throw new InvalidOperationException("Invalid form.");
+
+            var cityId = form.Fields
+                             .Single(field => field.Name == "city")
+                             .Value;
+            var cityName = cities[cityId];
+            var pickUpPointId = form.Fields
+                                    .Single(field => field.Name == "pickUpPoint")
+                                    .Value;
+            var picUpPointName = pickUpPoints[cityId][pickUpPointId];
+
+            var parameters = new Dictionary<string, string>
+            {
+                { nameof(cityId), cityId },
+                { nameof(cityName), cityName },
+                { nameof(pickUpPointId), pickUpPointId },
+                { nameof(picUpPointName), picUpPointName },
+            };
+
+            var description = $"Город: {cityName}\nПункт выдачи: {picUpPointName}";
+
+            return new OrderDelivery(UniqueCode, description, 150m, parameters);
+        }
+
+        public Form MoveNextForm(int orderId, int step, IReadOnlyDictionary<string, string> values)
         {
             if (step == 1)
             {

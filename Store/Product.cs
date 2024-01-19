@@ -12,7 +12,9 @@ namespace Store
         public decimal Price { get; }
 
         public string? Brand { get; }
- 
+
+        //public string Size { get; }
+
         public string ArticleNumber {  get; }
 
         public string Description { get; }
