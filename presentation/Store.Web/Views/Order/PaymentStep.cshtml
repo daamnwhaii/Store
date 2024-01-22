@@ -1,13 +1,10 @@
 ﻿@using Store.Web.Controllers
-@model Form
-
 @{
-    ViewData["Title"] = "Параметры доставки";
+    ViewData["Title"] = "Оплата товаров";
 }
 
-<h4>Параметры доставки</h4>
-
-<form action="@Url.Action(nameof(OrderController.NextDelivery))" method="post">
+<h4>Параметры оплаты</h4>
+<form action="@Url.Action(nameof(OrderController.NextPayment))" method="post">
     <input type="hidden" name="id" value="@Model.OrderId" />
     <input type="hidden" name="uniqueCode" value="@Model.UniqueCode" />
     <input type="hidden" name="step" value="@Model.Step" />
@@ -30,5 +27,6 @@
             </div>
         }
     }
-    <button type="submit" class="btn btn-success">Далее</button>
+    <p>Нажмите "Оплатить при получении" для завершения оформления заказа</p>
+    <button type="submit" class="btn btn-success">Оплатить при получении</button>
 </form>

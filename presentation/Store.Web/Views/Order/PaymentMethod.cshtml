@@ -1,14 +1,14 @@
-﻿@model DeliveryModel
+﻿
 @{
-    ViewData["Title"] = "Способ доставки";
+    ViewData["Title"] = "Способ оплаты";
 }
 
-<h4>Способ доставки</h4>
+<h4>Оплата товаров</h4>
 
-<form action="@Url.Action("StartDelivery")" method="post">
+<form action="@Url.Action("StartPayment")" method="post">
     <input type="hidden" name="id" value="@Model.OrderId" />
     <div class="form-group">
-        <label for="code">Выберите способ доставки:</label>
+        <label for="code">Выберите способ оплаты:</label>
         <select class="form-control" name="uniqueCode">
             @foreach (var method in Model.Methods)
             {
