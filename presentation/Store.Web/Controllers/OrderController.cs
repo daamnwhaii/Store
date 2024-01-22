@@ -75,7 +75,10 @@ namespace Store.Web.Controllers
 
             var product = productRepository.GetById(productId);
 
-            order.AddOrUpdateItem(product, count);
+            if (order.Items.TryGet(productId, out OrderItem orderItem))
+                orderItem.Count += count;
+            else
+                order.Items.Add(productId, product.Price, count);
 
             SaveOrderAndCart(order, cart);
 
@@ -87,7 +90,7 @@ namespace Store.Web.Controllers
         {
             (Order order, Cart cart) = GetOrCreateOrderAndCart();
 
-            order.GetItem(productId).Count = count;
+            order.Items.Get(productId).Count = count;
 
             SaveOrderAndCart(order, cart);
 
@@ -124,13 +127,11 @@ namespace Store.Web.Controllers
         {
             (Order order, Cart cart) = GetOrCreateOrderAndCart();
 
-            order.RemoveItem(productId);
+            order.Items.Remove(productId);
 
             SaveOrderAndCart(order, cart);
             return RedirectToAction("Index", "Order");
         }
-
-
 
         [HttpPost]
         public IActionResult SendConfirmationCode(int id, string cellPhone)
