@@ -1,6 +1,6 @@
 ﻿using Store.Contractors;
 
-namespace Store.Web.Controllers
+namespace Store.Contractors
 {
     public class PickUpPointDeliveryService : IDeliveryService
     {
@@ -32,81 +32,63 @@ namespace Store.Web.Controllers
             }
         };
 
-        public string UniqueCode => "PickUpPoint";
+        public string Name => "PickUpPoint";
 
         public string Title => "Доставка в пункты выдачи в Уфе и Стерлитамаке";
 
-        public Form CreateForm(Order order)
+        public Form FirstForm(Order order)
         {
-            if (order == null)
-                throw new ArgumentNullException(nameof(order));
+            return Form.CreateFirst(Name)
+                       .AddParameter("orderId", order.Id.ToString())
+                       .AddField(new SelectionField("Город", "city", "1", cities));
+        }
 
-            return new Form(UniqueCode, order.Id, 1, false, new[]
+        public Form NextForm(int step, IReadOnlyDictionary<string, string> values)
+        {
+            if (step == 1)
             {
-                new SelectionField("Город", "city", "1", cities),
-            });
+                if (values["city"] == "1")
+                {
+                    return Form.CreateNext(Name, 2, values)
+                               .AddField(new SelectionField("Пункт выдачи", "pickUpPoint", "1", pickUpPoints["1"]));
+                }
+                else if (values["city"] == "2")
+                {
+                    return Form.CreateNext(Name, 2, values)
+                               .AddField(new SelectionField("Пункт выдачи", "pickUpPoint", "4", pickUpPoints["2"]));
+                }
+                else
+                    throw new InvalidOperationException("Invalid pick-up points city.");
+            }
+            else if (step == 2)
+            {
+                return Form.CreateLast(Name, 3, values);
+            }
+            else
+                throw new InvalidOperationException("Invalid pick-up points step.");
         }
 
         public OrderDelivery GetDelivery(Form form)
         {
-            if (form.UniqueCode != UniqueCode || !form.IsFinal)
+            if (form.ServiceName != Name || !form.IsFinal)
                 throw new InvalidOperationException("Invalid form.");
 
-            var cityId = form.Fields
-                             .Single(field => field.Name == "city")
-                             .Value;
+            var cityId = form.Parameters["city"];
             var cityName = cities[cityId];
-            var pickUpPointId = form.Fields
-                                    .Single(field => field.Name == "pickUpPoint")
-                                    .Value;
-            var picUpPointName = pickUpPoints[cityId][pickUpPointId];
+            var pickUpPointId = form.Parameters["pickUpPoint"];
+            var pickUpPointName = pickUpPoints[cityId][pickUpPointId];
 
             var parameters = new Dictionary<string, string>
             {
                 { nameof(cityId), cityId },
                 { nameof(cityName), cityName },
                 { nameof(pickUpPointId), pickUpPointId },
-                { nameof(picUpPointName), picUpPointName },
+                { nameof(pickUpPointName), pickUpPointName },
             };
 
-            var description = $"Город: {cityName}\nПункт выдачи: {picUpPointName}";
+            var description = $"Город: {cityName}\nПункт выдачи: {pickUpPointName}";
 
-            return new OrderDelivery(UniqueCode, description, 150m, parameters);
-        }
-
-        public Form MoveNextForm(int orderId, int step, IReadOnlyDictionary<string, string> values)
-        {
-            if (step == 1)
-            {
-                if (values["city"] == "1")
-                {
-                    return new Form(UniqueCode, orderId, 2, false, new Field[]
-                    {
-                        new HiddenField("Город", "city", "1"),
-                        new SelectionField("Пункт выдачи", "pickUpPoint", "1", pickUpPoints["1"]),
-                    });
-                }
-                else if (values["city"] == "2")
-                {
-                    return new Form(UniqueCode, orderId, 2, false, new Field[]
-                    {
-                        new HiddenField("Город", "city", "2"),
-                        new SelectionField("Пункт выдачи", "pickUpPoint", "4", pickUpPoints["2"]),
-                    });
-                }
-                else
-                    throw new InvalidOperationException("Invalid pick-up city.");
-            }
-            else if (step == 2)
-            {
-                return new Form(UniqueCode, orderId, 3, true, new Field[]
-                {
-                    new HiddenField("Город", "city", values["city"]),
-                    new HiddenField("Пункт выдачи", "pickUpPoint", values["pickUpPoint"]),
-                });
-            }
-            else
-                throw new InvalidOperationException("Invalid pickUpPoint step.");
+            return new OrderDelivery(Name, description, 150m, parameters);
         }
     }
 
