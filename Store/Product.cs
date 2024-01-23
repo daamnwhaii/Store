@@ -1,44 +1,110 @@
-﻿using System.Diagnostics;
+﻿using Store.Data;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace Store
 {
     public class Product
     {
-        public int Id { get; }
+        private readonly ProductDto dto;
 
-        public string Title { get; }
+        public int Id => dto.Id;
 
-        public decimal Price { get; }
-
-        public string? Brand { get; }
-
-        //public string Size { get; }
-
-        public string ArticleNumber {  get; }
-
-        public string Description { get; }
-
-        public Product(int id, string title, string? brand, decimal price, string articleNumber, string description)
+        public string ArticleNumber
         {
-            Id = id;
-            Title = title;
-            Brand = brand;
-            Price = price;
-            ArticleNumber = articleNumber;
-            Description = description;
+            get => dto.ArticleNumber;
+            set => dto.ArticleNumber = value;
         }
 
-        public static bool IsArticleNumber(string str)     //метод, определяющий является ли введенная строка артикулом
+        public string Title
         {
-            if (str == null)
+            get => dto.Title;
+            set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException(nameof(Title));
+
+                dto.Title = value.Trim();
+            }
+        }
+
+        public decimal Price
+        {
+            get => dto.Price;
+            set => dto.Price = value;
+        }
+
+        public string Brand
+        {
+            get => dto.Brand;
+            set => dto.Brand = value?.Trim();
+        }
+        public string Description
+        {
+            get => dto.Description;
+            set => dto.Description = value;
+        }
+        //public string Size { get; }
+
+
+        //конструктор с dto
+        internal Product(ProductDto dto)
+        { 
+            this.dto = dto;
+        }
+
+        public static bool TryFormatArticleNumber(string articleNumber, out string formattedArticleNumber)
+        {
+            if (articleNumber == null)
+            {
+                formattedArticleNumber = null;
                 return false;
             }
-            else
+
+            formattedArticleNumber = articleNumber.Replace("-", "")
+                                .Replace(" ", "")
+                                .ToUpper();
+
+            return Regex.IsMatch(formattedArticleNumber, "\\d{7}");  //шаблон, с которым сранивается введенный артикул (7-значное число)
+        }
+
+        public static bool IsArticleNumber(string articleNumber)
+            => TryFormatArticleNumber(articleNumber, out _);
+
+
+        public static class DtoFactory
+        {
+            public static ProductDto Create(string articleNumber,
+                                         string title,
+                                         string brand,
+                                         decimal price,
+                                         string description
+                                         )
             {
-                return Regex.IsMatch(str, "\\d{7}");     //шаблон, с которым сранивается введенный артикул (7-значное число)
+                if (TryFormatArticleNumber(articleNumber, out string formattedIsbn))
+                    articleNumber = formattedIsbn;
+                else
+                    throw new ArgumentException(nameof(articleNumber));
+
+                if (string.IsNullOrWhiteSpace(title))
+                    throw new ArgumentException(nameof(title));
+
+                return new ProductDto
+                {
+                    ArticleNumber = articleNumber,
+                    Title = title.Trim(),
+                    Brand = brand?.Trim(),
+                    Price = price,
+                    Description = description?.Trim()
+                };
             }
+        }
+
+        public static class Mapper
+        {
+            public static Product Map(ProductDto dto) => new Product(dto);
+
+            public static ProductDto Map(Product domain) => domain.dto;
         }
     }
 }

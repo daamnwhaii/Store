@@ -1,5 +1,4 @@
 using Store.Contractors;
-using Store.Memory;
 using Store.Messages;
 using Store.Web.App;
 using Store.Web.Contractors;
@@ -25,8 +24,6 @@ namespace Store.Web
                 options.Cookie.IsEssential = true;
             });
 
-            builder.Services.AddSingleton<IProductRepository, ProductRepository>();
-            builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
             builder.Services.AddSingleton<INotificationService, DebugNotificationService>();
             builder.Services.AddSingleton<IDeliveryService, PickUpPointDeliveryService>();
             builder.Services.AddSingleton<IPaymentService, CashPaymentService>();
