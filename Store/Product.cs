@@ -29,7 +29,7 @@ namespace Store
             Description = description;
         }
 
-        internal static bool IsArticleNumber(string str)     //метод, определяющий является ли введенная строка артикулом
+        public static bool IsArticleNumber(string str)     //метод, определяющий является ли введенная строка артикулом
         {
             if (str == null)
             {
